@@ -1,13 +1,43 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
+    <title>Finance Logger</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div class="wrapper">
+      <h1>Finance Logger</h1>
+
+      <!-- output list -->
+      <ul class="item-list"></ul>
+    </div>
+
+    <footer>
+      <form class="new-item-form">
+        <div class="field">
+          <label>Tipo:</label>
+          <select id="type">
+            <option value="invoice">Fatura</option>
+            <option value="payment">Pagamento</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>De / Para:</label>
+          <input type="text" id="tofrom" />
+        </div>
+        <div class="field">
+          <label>Detalhes:</label>
+          <input type="text" id="details" />
+        </div>
+        <div class="field">
+          <label>Quantidade (R$):</label>
+          <input type="number" id="amount" />
+        </div>
+        <button>Adicionar</button>
+      </form>
+    </footer>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

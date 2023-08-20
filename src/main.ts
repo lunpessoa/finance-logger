@@ -1,24 +1,37 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+import "./assets/styles/index.css";
+import { HasFormatter } from "./interfaces/HasFormatter";
+import { Invoice } from "./scripts/modules/invoice";
+import { Payment } from "./scripts/modules/payment";
+import { ListTemplate } from "./scripts/modules/list-template";
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+const form = document.querySelector(".new-item-form") as HTMLFormElement;
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+const type = document.querySelector("#type") as HTMLSelectElement;
+const tofrom = document.querySelector("#tofrom") as HTMLInputElement;
+const details = document.querySelector("#details") as HTMLInputElement;
+const amount = document.querySelector("#amount") as HTMLInputElement;
+
+// List template instance
+const ul = document.querySelector(".item-list") as HTMLUListElement;
+const list = new ListTemplate(ul);
+
+form.addEventListener("submit", (e: Event) => {
+  e.preventDefault();
+
+  // Tuples of values to use spread operator
+  const values: [string, string, number] = [
+    tofrom.value,
+    details.value,
+    amount.valueAsNumber,
+  ];
+
+  let doc: HasFormatter;
+
+  if (type.value === "invoice") {
+    doc = new Invoice(...values);
+  } else {
+    doc = new Payment(...values);
+  }
+
+  list.render(doc, type.value, "end");
+});
